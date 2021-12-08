@@ -29,4 +29,13 @@ public class UserController {
         return "login";
     }
 
+	@RequestMapping(value = "admin", method = RequestMethod.GET)
+	public String adminPage() {
+		return "admin";
+	}
+
+	@RequestMapping(value = "user", method = RequestMethod.GET)
+	public String userPage() {
+		return "user";
+	}
 }
