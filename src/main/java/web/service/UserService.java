@@ -1,12 +1,10 @@
-package web.dao;
+package web.service;
 
 import web.model.User;
 
 import java.util.List;
 
-public interface UserDao  {
-
-    public List<User> allUsers(); // выводит всех юзеров
+public interface UserService {
 
     public void addUser(User user); // добавление юзера
 
@@ -15,4 +13,6 @@ public interface UserDao  {
     public void updateUser(User user); // изменять
 
     public User getUserById(Long id); // получение юзера по id
+
+    public List<User> allUsers(); // выводит всех юзеров
 }

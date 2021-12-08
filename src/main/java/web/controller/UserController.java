@@ -1,10 +1,12 @@
 package web.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import web.model.User;
+import web.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.List;
 @RequestMapping("/")
 public class UserController {
 
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(value = "hello", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
@@ -29,13 +33,48 @@ public class UserController {
         return "login";
     }
 
-	@RequestMapping(value = "admin", method = RequestMethod.GET)
-	public String adminPage() {
+	@GetMapping(value = "admin")
+	public String adminAllUsers(Model model) {
+		model.addAttribute("admin", userService.allUsers());
+		System.out.println(userService.allUsers());
 		return "admin";
 	}
 
-	@RequestMapping(value = "user", method = RequestMethod.GET)
-	public String userPage() {
+	@GetMapping(value = "user")
+	public String userAllUsers(Model model) {
+		model.addAttribute("user", userService.allUsers());
+		System.out.println(userService.allUsers());
 		return "user";
 	}
+
+	@GetMapping("add")
+	public String getUser() { //заполнение
+		return "add";
+	}
+
+	@PostMapping("add")
+	public String addUser(@ModelAttribute("addUser") User user) {
+		userService.addUser(user);
+		return "redirect:/admin";
+	}
+
+	@GetMapping("edit/{id}")
+	public String getUserById(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("edit", userService.getUserById(id));
+		return "edit";
+	}
+
+	@PostMapping("edit/{id}")
+	public String updateUser(@ModelAttribute("edit") User user) {
+		userService.updateUser(user);
+		return "redirect:/admin";
+	}
+
+	@GetMapping("delete/{id}")
+	public String deleteUser(@PathVariable("id") Long id) {
+		User user = userService.getUserById(id);
+		userService.deleteUser(user);
+		return "redirect:/admin";
+	}
+
 }

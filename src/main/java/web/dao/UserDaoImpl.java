@@ -1,29 +1,46 @@
 package web.dao;
 
 import org.springframework.stereotype.Repository;
-import web.model.Role;
 import web.model.User;
 
-import java.util.Collections;
-import java.util.Map;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.List;
+
 
 @Repository
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
 
-    private final Map<String, User> adminMap = Collections.singletonMap("ADMIN",
-            new User(1L, "ADMIN", "ADMIN", Collections.singleton(new Role(1L, "ROLE_ADMIN"))));
-
-    private final Map<String, User> userMap = Collections.singletonMap("USER",
-            new User(2L, "USER", "USER", Collections.singleton(new Role(2L, "ROLE_USER"))));
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
-    public User getUserByName(String name) {
-        if (adminMap.containsKey(name)) {
-            return adminMap.get(name);
-        } else if (userMap.containsKey(name)) {
-            return userMap.get(name);
-        } else
-            return null;
+    public void addUser(User user) {
+        entityManager.persist(user);
     }
+
+    @Override
+    public void deleteUser(User user) {
+        entityManager.remove(entityManager.find(User.class,user.getId()));
     }
+
+    @Override
+    public void updateUser(User user) {
+        entityManager.merge(user);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public User getUserById(Long id) {
+        return entityManager.find(User.class, id);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<User> allUsers() {
+        return entityManager.createQuery("select u from User u", User.class).getResultList();
+    }
+
+
+}
 
