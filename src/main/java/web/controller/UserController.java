@@ -15,8 +15,11 @@ import java.util.List;
 @RequestMapping("/")
 public class UserController {
 
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
+
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
 
 	@RequestMapping(value = "hello", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
@@ -32,6 +35,7 @@ public class UserController {
     public String loginPage() {
         return "login";
     }
+
 
 	@GetMapping(value = "admin")
 	public String adminAllUsers(Model model) {

@@ -15,4 +15,5 @@ public interface UserDao  {
     public void updateUser(User user); // изменять
 
     public User getUserById(Long id); // получение юзера по id
+
 }

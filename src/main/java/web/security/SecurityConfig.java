@@ -1,25 +1,46 @@
 package web.security;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import web.security.handler.LoginSuccessHandler;
+import web.service.UserDetailServiceImpl;
+
 
 @Configuration
 @EnableWebSecurity
+
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("ADMIN").password("ADMIN").roles("ADMIN","USER");
-        auth.inMemoryAuthentication().withUser("USER").password("USER").roles("USER");
+    private final UserDetailServiceImpl userDetailServiceImpl;
+
+    @Autowired
+    public SecurityConfig(UserDetailServiceImpl userDetailServiceImpl) {
+        this.userDetailServiceImpl = userDetailServiceImpl;
     }
+
+
+//    @Override
+//    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication()
+//                .withUser("ADMIN").password("ADMIN").roles("ADMIN")
+//                .and()
+//                .withUser("USER").password("USER").roles("USER");
+
+      //  auth.userDetailsService(userService).passwordEncoder()
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -61,7 +82,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() { // преобразователь паролей
+     //   return new BCryptPasswordEncoder();
         return NoOpPasswordEncoder.getInstance();
     }
+
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider (){
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        authenticationProvider.setUserDetailsService(userDetailServiceImpl);
+        return authenticationProvider;
+    }
+
 }

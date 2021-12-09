@@ -17,21 +17,20 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @Column (name = "name",unique = true)
     private String name; // уникальное значение
-
 
     private String password;
 
-   @ManyToMany (cascade = CascadeType.ALL)
-  @JoinTable (joinColumns = @JoinColumn (name = "user_id"),
-              inverseJoinColumns = @JoinColumn (name = "role_id"))
-    private Set <Role> roles;
-
-    public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-    }
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
     public User() {
+    }
+
+    public User(Long id, String name, String password, Set<Role> roles) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -58,7 +57,6 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-     //   return roles.stream().map(r->new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
         return roles;
     }
 
@@ -101,7 +99,8 @@ public class User implements UserDetails {
     }
 
     public void setRoles(String roles) {
-        this.roles = new HashSet<>();}
+        this.roles = new HashSet<>();
+    }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
