@@ -1,12 +1,10 @@
 package web.model;
 
 import org.springframework.security.core.GrantedAuthority;
-
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -17,7 +15,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (name = "name",unique = true)
+    @Column(name = "name", unique = true)
     private String name; // уникальное значение
 
     private String password;
@@ -36,8 +34,6 @@ public class User implements UserDetails {
         this.password = password;
         this.roles = roles;
     }
-
-
 
     public Long getId() {
         return id;
@@ -96,11 +92,6 @@ public class User implements UserDetails {
 
     public Set<Role> getRoles() {
         return roles;
-    }
-
-    public void setRoles(String roles) {
-
-        this.roles = new HashSet<>();
     }
 
     public void setRoles(Set<Role> roles) {

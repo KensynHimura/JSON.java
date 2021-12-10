@@ -10,5 +10,4 @@ public interface RoleService {
 
     Role findByRoleName(String role); // получение роли по имени
 
-    Role getRoleById(Long id);  //получение роли по id
 }

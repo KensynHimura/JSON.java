@@ -16,4 +16,5 @@ public interface UserService {
 
     List<User> allUsers(); // выводит всех юзеров
 
+    User findByUserName(String name); // получение юзера по имени
 }

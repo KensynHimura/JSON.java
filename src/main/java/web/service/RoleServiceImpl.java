@@ -1,6 +1,5 @@
 package web.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.dao.RoleDao;
@@ -9,10 +8,13 @@ import web.model.Role;
 import java.util.List;
 
 @Service
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
 
-    @Autowired
-    private RoleDao roleDao;
+    private final RoleDao roleDao;
+
+    public RoleServiceImpl(RoleDao roleDao) {
+        this.roleDao = roleDao;
+    }
 
     @Override
     @Transactional
@@ -26,9 +28,4 @@ public class RoleServiceImpl implements RoleService{
         return roleDao.findByRoleName(role);
     }
 
-    @Override
-    @Transactional (readOnly = true)
-    public Role getRoleById(Long id) {
-        return roleDao.getRoleById(id);
-    }
 }
