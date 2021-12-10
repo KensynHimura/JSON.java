@@ -1,6 +1,6 @@
 package web.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -69,8 +69,8 @@ public class UserController {
 	}
 
 	@PostMapping("edit/{id}")
-	public String updateUser(@ModelAttribute("edit") User user) {
-		userService.updateUser(user);
+	public String editUser(@ModelAttribute("edit") User user) {
+		userService.editUser(user);
 		return "redirect:/admin";
 	}
 
