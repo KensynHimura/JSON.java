@@ -1,20 +1,71 @@
 package web.service;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import web.repository.RoleRepository;
+import web.repository.UserRepository;
+import web.model.Role;
 import web.model.User;
 
 import java.util.List;
 
-public interface UserService {
 
-    void addUser(User user); // добавление юзера
+@Service
+public class UserService implements UserDetailsService {
 
-    void deleteUser(User user); // удаление
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    void editUser(User user); // изменять
 
-    User getUserById(Long id); // получение юзера по id
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
 
-    List<User> allUsers(); // выводит всех юзеров
+    @Transactional
+    public void addUser(User user) {
+        userRepository.save(user);
+    }
 
-    User findByUserName(String name); // получение юзера по имени
+    @Transactional
+    public List<User> allUsers() {
+        return userRepository.findAll();
+    }
+
+    @Transactional
+    public List<Role> allRoles() {
+        return roleRepository.findAll();
+    }
+
+    @Transactional
+    public void deleteUser(User user) {
+        userRepository.delete(user);
+    }
+
+
+    @Transactional
+    public User getUserById(Long id) {
+        return userRepository.getOne(id);
+    }
+
+    public User findByUserName(String userName) {
+        return userRepository.findByName(userName);
+    }
+
+    public Role findByRoleName(String role) {
+        return roleRepository.findByRole(role);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        User user = findByUserName(userName);
+        if (user == null) {
+            throw new UsernameNotFoundException(userName + "is not in the database");
+        }
+        return user;
+    }
+
 }

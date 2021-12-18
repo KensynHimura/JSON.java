@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import web.model.Role;
 import web.model.User;
-import web.service.RoleService;
 import web.service.UserService;
 
 import java.security.Principal;
@@ -19,11 +18,8 @@ public class AdminController {
 
     private final UserService userService;
 
-    private final RoleService roleService;
-
-    public AdminController(UserService userService, RoleService roleService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
-        this.roleService = roleService;
     }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
@@ -34,13 +30,13 @@ public class AdminController {
 
     @GetMapping(value = "admin")
     public String adminAllUsers(Model model) {
-        model.addAttribute("admin", userService.allUsers());
+       model.addAttribute("admin", userService.allUsers());
         return "admin";
     }
 
     @GetMapping(value = "user")
     public String userAllUsers(Model model, Principal principal) {
-        model.addAttribute("user", userService.findByUserName(principal.getName()));
+      model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
 
         return "user";
     }
@@ -48,7 +44,7 @@ public class AdminController {
     @GetMapping("add")
     public String getUser(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("role", roleService.allRoles());
+        model.addAttribute("role", userService.allRoles());
         return "add";
     }
 
@@ -63,7 +59,7 @@ public class AdminController {
     @GetMapping("edit/{id}")
     public String getUserById(@PathVariable("id") Long id, Model model) {
         model.addAttribute("edit", userService.getUserById(id));
-        model.addAttribute("role", roleService.allRoles());
+        model.addAttribute("role", userService.allRoles());
         return "edit";
     }
 
@@ -71,7 +67,7 @@ public class AdminController {
     public String editUser(@ModelAttribute("edit") User user,
                            @RequestParam(value = "newRole") String[] role) {
         user.setRoles(getAddRole(role));
-        userService.editUser(user);
+        userService.addUser(user);
         return "redirect:/admin";
     }
 
@@ -85,7 +81,7 @@ public class AdminController {
     private Set<Role> getAddRole(String[] role) {
         Set<Role> roleSet = new HashSet<>();
         for (int i = 0; i < role.length; i++) {
-            roleSet.add(roleService.findByRoleName(role[i]));
+            roleSet.add(userService.findByRoleName(role[i]));
         }
         return roleSet;
     }
