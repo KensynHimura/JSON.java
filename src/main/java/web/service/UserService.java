@@ -51,8 +51,8 @@ public class UserService implements UserDetailsService {
         return userRepository.getOne(id);
     }
 
-    public User findByUserName(String userName) {
-        return userRepository.findByName(userName);
+    public User findByUserFirstName(String userFirstName) {
+        return userRepository.findByFirstName (userFirstName);
     }
 
     public Role findByRoleName(String role) {
@@ -60,10 +60,10 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user = findByUserName(userName);
+    public UserDetails loadUserByUsername(String userFirstName) throws UsernameNotFoundException {
+        User user = findByUserFirstName(userFirstName);
         if (user == null) {
-            throw new UsernameNotFoundException(userName + "is not in the database");
+            throw new UsernameNotFoundException(userFirstName + "is not in the database");
         }
         return user;
     }

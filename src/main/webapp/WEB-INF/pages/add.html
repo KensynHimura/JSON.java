@@ -9,12 +9,20 @@
 <form th:action="@{/add}" th:object="${addUser}" method="post">
     <table>
         <tr>
-            <td>name</td>
-            <td><input type="text" name="name"/>
+            <td>First name</td>
+            <td><input type="text" name="firstName" />
             <td>
-            <td>password</td>
-            <td><input type="text" name="password"/>
+            <td>Last name</td>
+            <td><input type="text" name="lastName" />
             <td>
+            <td>Age</td>
+            <td><input type="text" name="age" />
+            <td>
+            <td>Email</td>
+            <td><input type="text" name="email" />
+            <td>
+            <td>Password</td>
+            <td><input type="text" name="password" />
         </tr>
         <tr>
             <td>role</td>
