@@ -9,77 +9,81 @@
 
     <title>Admin panel</title>
 </head>
+
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
+<!--        <tr th:each="user: ${user}">-->
+<!--            <td th:text="${user.getEmail()}"></td>-->
+<!--        <strong th:utext="${currentUser.login}"></strong>-->
         <a class="navbar-brand"> with roles:</a>
+<!--        <span th:utext="${currentUser.roleSet}"></span>-->
         <a class="btn btn-dark text-secondary bg-dark" href="/login">Logout</a>
-        </form>
     </div>
 </nav>
 
-<div class="btn-group-vertical btn-primary col-md-2" role="group" aria-label="Vertical button group">
-    <button type="button" class="btn btn-primary">Admin</button>
-    <button type="button" class="btn btn-primary">User</button>
+<div class="d-flex ">
+<div style="height: 900px; width:15%;">
+<div class="btn-group-vertical  h-100 d-inline-block" role="group" aria-label="Vertical button group">
+    <a href="/admin">
+    <button type="button" class="text-start btn btn-primary mt-3" col style="width:212%">Admin</button>
+    </a>
+    <a href="/user">
+    <button type="button" class="text-start btn" col style="width:212%">User</button>
+    </a>
 </div>
-
-<div class="container mt-3 bg-light">
+</div>
+    <div style="height: 900px; width:85%; background-color: #f7f7f8">
+        <div class="p-3 h-100 d-inline-block">
     <h1>Admin panel </h1>
+            <div style ="width: 200%;">
+            <div class="card text-center">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="true" href="/admin">Users table</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/add">New User</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body" style="background-color: #f7f7f8">
+                    <h3 class="card-title text-start">All users</h3>
+                </div>
+                <div class="card-body">
 
-<!--    <nav class="navbar navbar-expand-lg" style="background-color: #FFFFFF">-->
-<!--        <div class="container-fluid">-->
-<!--            </button>-->
-<!--            <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-<!--                <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
-<!--                    <li class="nav-item">-->
-<!--                        <a class="nav-link active" aria-current="page" href="/admin">Users table</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item">-->
-<!--                        <a class="nav-link active" aria-current="page" href="/add">New User</a>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </nav>-->
-
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="/admin">Users table</a> </li>
-            <li class="active"><a href="/add">New User</a> </li>
-        </ul>
-    </div>
-    </nav>
+                    <table class="table table-striped">
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Age</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                        <tr th:each="user:${admin}">
+                            <td th:text="${user.getId()}">ID</td>
+                            <td th:text="${user.getFirstName()}">First Name</td>
+                            <td th:text="${user.getLastName()}">Last Name</td>
+                            <td th:text="${user.getAge()}">Age</td>
+                            <td th:text="${user.getEmail()}">Email</td>
+                            <td th:text="${user.getRoles()}">Role</td>
+                            <td><a class="btn btn-info" href="/edit/{id} (id=${user.id})" role="button">Edit</a>
+                            <td><a class="btn btn-danger" href="/delete/{id}" role="button">Delete</a>
+                        </tr>
+                    </table>
 
 
-    <table class="table table-striped">
-        <div class="row bg-light">
-            <h5>All users </h5>
-        </div>
-        <table class="table table-striped">
-            <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Age</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Edit</th>
-            <th>Delete</th>
-            <tr th:each="user:${admin}">
-                <td th:text="${user.getId()}">ID</td>
-                <td th:text="${user.getFirstName()}">First Name</td>
-                <td th:text="${user.getLastName()}">Last Name</td>
-                <td th:text="${user.getAge()}">Age</td>
-                <td th:text="${user.getEmail()}">Email</td>
-                <td th:text="${user.getRoles()}">Role</td>
-                <td><a class="btn btn-info" href="/edit/{id} (id=${user.id})" role="button">Edit</a>
-                <td><a class="btn btn-danger" href="/delete/{id}" role="button">Delete</a>
-            </tr>
-        </table>
-    </table>
+                </div>
+
+            </div>
+
 </div>
-
+</div>
+    </div>
+</div>
 </th>
 
 
