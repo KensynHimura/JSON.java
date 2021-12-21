@@ -22,7 +22,6 @@ import java.util.Properties;
 @ComponentScan(value = "web")
 @EnableTransactionManagement (proxyTargetClass = true)
 @PropertySource(value = "classpath:db.properties")
-@EnableJpaRepositories("web.repository")
 public class HibernateConfig {
 
     private final Environment environment;
