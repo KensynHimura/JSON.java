@@ -45,8 +45,6 @@ public class AdminController {
         return "admin";
     }
 
-
-
     @GetMapping(value = "user")
     public String userAllUsers(Model model, Principal principal) {
       model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
