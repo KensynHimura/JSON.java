@@ -31,23 +31,16 @@ public class AdminController {
     @GetMapping(value = "admin")
     public String adminAllUsers(Model model, Principal principal ) {
        model.addAttribute("admin", userService.allUsers());
-        model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
-        model.addAttribute("users", new User());
         model.addAttribute("role", userService.allRoles());
-        return "admin";
-    }
+        model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
 
-    @PostMapping("admin")
-    public String addAdmin(@ModelAttribute("addUser") User user,
-                          @RequestParam(value = "newRole") String[] role) {
-        user.setRoles(getAddRole(role));
-        userService.addUser(user);
         return "admin";
     }
 
     @GetMapping(value = "user")
     public String userAllUsers(Model model, Principal principal) {
       model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
+
         return "user";
     }
 
@@ -55,12 +48,12 @@ public class AdminController {
     public String getUser(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("role", userService.allRoles());
-        return "add";
+        return "admin";
     }
 
     @PostMapping("add")
     public String addUser(@ModelAttribute("addUser") User user,
-                          @RequestParam(value = "newRole") String[] role) {
+                          @RequestParam(value = "roleSet") String[] role) {
         user.setRoles(getAddRole(role));
         userService.addUser(user);
         return "redirect:/admin";
@@ -75,7 +68,7 @@ public class AdminController {
 
     @PostMapping("edit/{id}")
     public String editUser(@ModelAttribute("edit") User user,
-                           @RequestParam(value = "newRole") String[] role) {
+                           @RequestParam(value = "roleSet") String[] role) {
         user.setRoles(getAddRole(role));
         userService.addUser(user);
         return "redirect:/admin";
