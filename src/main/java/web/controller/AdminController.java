@@ -32,13 +32,24 @@ public class AdminController {
     public String adminAllUsers(Model model, Principal principal ) {
        model.addAttribute("admin", userService.allUsers());
         model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
+        model.addAttribute("users", new User());
+        model.addAttribute("role", userService.allRoles());
         return "admin";
     }
+
+    @PostMapping("admin")
+    public String addAdmin(@ModelAttribute("addUser") User user,
+                          @RequestParam(value = "newRole") String[] role) {
+        user.setRoles(getAddRole(role));
+        userService.addUser(user);
+        return "admin";
+    }
+
+
 
     @GetMapping(value = "user")
     public String userAllUsers(Model model, Principal principal) {
       model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
-
         return "user";
     }
 
