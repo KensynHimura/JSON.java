@@ -14,80 +14,158 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-<!--        <tr th:each="user: ${user}">-->
-<!--            <td th:text="${user.getEmail()}"></td>-->
-<!--        <strong th:utext="${currentUser.login}"></strong>-->
+        <!--        <tr th:each="user: ${user}">-->
+        <!--            <td th:text="${user.getEmail()}"></td>-->
+        <!--        <strong th:utext="${currentUser.login}"></strong>-->
         <a class="navbar-brand"> with roles:</a>
-<!--        <span th:utext="${currentUser.roleSet}"></span>-->
+        <!--        <span th:utext="${currentUser.roleSet}"></span>-->
         <a class="btn btn-dark text-secondary bg-dark" href="/login">Logout</a>
     </div>
 </nav>
 
+
 <div class="d-flex ">
-<div style="height: 900px; width:15%;">
-<div class="btn-group-vertical  h-100 d-inline-block" role="group" aria-label="Vertical button group">
-    <a href="/admin">
-    <button type="button" class="text-start btn btn-primary mt-3" col style="width:212%">Admin</button>
-    </a>
-    <a href="/user">
-    <button type="button" class="text-start btn" col style="width:212%">User</button>
-    </a>
-</div>
-</div>
-    <div style="height: 900px; width:85%; background-color: #f7f7f8">
-        <div class="p-3 h-100 d-inline-block">
-    <h1>Admin panel </h1>
-            <div style ="width: 200%;">
-<!--            <div class="card text-center">-->
-<!--                <div class="card-header">-->
-<!--                    <ul class="nav nav-tabs card-header-tabs">-->
-                        <ul class="nav nav-tabs ">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="true" href="/admin">Users table</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/add">New User</a>
-                        </li>
-                    </ul>
-<!-- <div class="card-header">-->
-                <div class="card-header" style="background-color: #f7f7f8">
-                    <h3 class="card-title text-start">All users</h3>
+
+    <div class="d-flex align-items-start" >
+        <div class="col-4">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" href="#v-pills-home" role="tab"
+               aria-controls="v-pills-home" aria-selected="true">Admin</a>
+            <a class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile" role="tab"
+               aria-controls="v-pills-profile" aria-selected="false">User</a>
+        </div>
+        </div>
+
+        <div class="tab-content" id="v-pills-tabContent">
+
+            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                <div style="height: 900px; width:427%; background-color: #f7f7f8">
+                    <div class="p-3 h-100 d-inline-block">
+                        <h1> User information-page </h1>
+                        <div style="width: 300%;">
+                            <div class="card-header" style="background-color: #f7f7f8">
+                                <h3 class="card-title text-start">About users</h3>
+                            </div>
+                            <div class="card-header" style="background-color: #FFFFFF">
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <th>ID</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Age</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <tr th:each="user:${user}">
+                                            <td th:text="${user.getId()}">ID</td>
+                                            <td th:text="${user.getFirstName()}">First Name</td>
+                                            <td th:text="${user.getLastName()}">Last Name</td>
+                                            <td th:text="${user.getAge()}">Age</td>
+                                            <td th:text="${user.getEmail()}">Email</td>
+                                            <td th:text="${user.getRoles()}">Role</td>
+                                        </tr>
+                                    </table>
+                                    <br/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                    <div class="card-header" style="background-color: #FFFFFF">
-                <div class="card-body">
+            </div>
 
-                    <table class="table table-striped">
-                        <th>ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Age</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                        <tr th:each="user:${admin}">
-                            <td th:text="${user.getId()}">ID</td>
-                            <td th:text="${user.getFirstName()}">First Name</td>
-                            <td th:text="${user.getLastName()}">Last Name</td>
-                            <td th:text="${user.getAge()}">Age</td>
-                            <td th:text="${user.getEmail()}">Email</td>
-                            <td th:text="${user.getRoles()}">Role</td>
-                            <td><a class="btn btn-info" href="/edit/{id} (id=${user.id})" role="button">Edit</a>
-                            <td><a class="btn btn-danger" href="/delete/{id}" role="button">Delete</a>
-                        </tr>
-                    </table>
+            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <div style="height: 900px; width:263.8%; background-color: #f7f7f8">
+                    <div class="p-3 h-100 d-inline-block">
+                        <h1>Admin panel </h1>
+                        <div style="width: 200%;">
 
+                            <nav class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home"
+                                   role="tab"
+                                   aria-controls="nav-home" aria-selected="true">Users table</a>
+                                <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile"
+                                   role="tab"
+                                   aria-controls="nav-profile" aria-selected="false">New User</a>
+                            </nav>
 
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                     aria-labelledby="nav-home-tab">
+
+                                    <div class="card-header" style="background-color: #f7f7f8">
+                                        <h3 class="card-title text-start">All users</h3>
+                                    </div>
+                                    <div class="card-header" style="background-color: #FFFFFF">
+                                        <div class="card-body">
+                                            <table class="table table-striped">
+                                                <th>ID</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Age</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                                <th>Edit</th>
+                                                <th>Delete</th>
+                                                <tr th:each="user:${admin}">
+                                                    <td th:text="${user.getId()}">ID</td>
+                                                    <td th:text="${user.getFirstName()}">First Name</td>
+                                                    <td th:text="${user.getLastName()}">Last Name</td>
+                                                    <td th:text="${user.getAge()}">Age</td>
+                                                    <td th:text="${user.getEmail()}">Email</td>
+                                                    <td th:text="${user.getRoles()}">Role</td>
+                                                    <td><a class="btn btn-info" href="/edit/{id} (id=${user.id})"
+                                                           role="button">Edit</a>
+                                                    <td><a class="btn btn-danger" href="/delete/{id}" role="button">Delete</a>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                                     aria-labelledby="nav-profile-tab">
+
+                                    <div class="card-header" style="background-color: #f7f7f8">
+                                        <h3 class="card-title text-start">Add new user</h3>
+                                    </div>
+                                    <div class="card-header" style="background-color: #FFFFFF">
+                                        <div class="card-body">
+                                            <table class="table table-striped">
+                                                <th>ID</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Age</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                                <th>Edit</th>
+                                                <th>Delete</th>
+                                                <tr th:each="user:${admin}">
+                                                    <td th:text="${user.getId()}">ID</td>
+                                                    <td th:text="${user.getFirstName()}">First Name</td>
+                                                    <td th:text="${user.getLastName()}">Last Name</td>
+                                                    <td th:text="${user.getAge()}">Age</td>
+                                                    <td th:text="${user.getEmail()}">Email</td>
+                                                    <td th:text="${user.getRoles()}">Role</td>
+                                                    <td><a class="btn btn-info" href="/edit/{id} (id=${user.id})"
+                                                           role="button">Edit</a>
+                                                    <td><a class="btn btn-danger" href="/delete/{id}" role="button">Delete</a>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
                 </div>
 
             </div>
+        </div>
 
-</div>
-</div>
+
     </div>
 </div>
-</th>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

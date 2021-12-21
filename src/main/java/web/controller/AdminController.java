@@ -29,8 +29,9 @@ public class AdminController {
 
 
     @GetMapping(value = "admin")
-    public String adminAllUsers(Model model) {
+    public String adminAllUsers(Model model, Principal principal ) {
        model.addAttribute("admin", userService.allUsers());
+        model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
         return "admin";
     }
 
