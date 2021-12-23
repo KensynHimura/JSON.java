@@ -129,7 +129,7 @@
 
 <!--                                                     кнопка Edit-->
                                                     <td>
-                                                        <button class="btn btn-primary " data-bs-toggle="modal"  data-bs-target="'#editStatic' + ${user.id}" >Edit</button>
+                                                        <button class="btn btn-primary " data-bs-toggle="modal"  th:attr="data-target='#editStatic' + ${user.id}"> Edit</button>
                                                     </td>
 
 <!--                                                    <td><a class="btn btn-primary " data-bs-toggle="modal" data-bs-target="${'#staticEdit' + user.id} "  role="button">Edit</a>-->
@@ -137,7 +137,7 @@
 
 
                                                     <!-- Modal -->
-                                                    <div class="modal fade"  th:id="'editStatic' + ${user.id}"  data-bs-backdrop="static"
+                                                    <div class="modal fade"  th:attr="id='editStatic' + ${user.id}"   data-bs-backdrop="static"
                                                          data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel" aria-hidden="true" role="dialog">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
@@ -201,7 +201,7 @@
                                                         </div>
 
 
-                                                    
+
                                                         <!-- кнопка Delete-->
                                                     <td><a class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#staticDelete" href="/delete/{id}"
                                                            role="button">Delete</a>
