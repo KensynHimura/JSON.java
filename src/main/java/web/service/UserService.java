@@ -53,6 +53,7 @@ public class UserService implements UserDetailsService {
 
     public User findByUserFirstName(String userFirstName) {
         return userRepository.findByFirstName (userFirstName);
+
     }
 
     public Role findByRoleName(String role) {
@@ -67,5 +68,7 @@ public class UserService implements UserDetailsService {
         }
         return user;
     }
+
+
 
 }

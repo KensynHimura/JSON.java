@@ -12,14 +12,15 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <!--        <tr th:each="user: ${user}">-->
-        <!--            <td th:text="${user.getEmail()}"></td>-->
-        <!--        <strong th:utext="${currentUser.login}"></strong>-->
-        <a class="navbar-brand"> with roles:</a>
-        <!--        <span th:utext="${currentUser.roleSet}"></span>-->
+<nav class="navbar navbar-lg navbar-dark bg-dark">
+    <div class="navbar-brand p-1 ">
+        <b th:text="${user.email}">email</b>
+        <h7> with roles:</h7>
+        <b th:text="${user.roles}"></b>
+    </div>
+    <div>
         <a class="btn btn-dark text-secondary bg-dark" href="/login">Logout</a>
+        </tr>
     </div>
 </nav>
 
