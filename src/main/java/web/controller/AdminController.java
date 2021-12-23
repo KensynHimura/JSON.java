@@ -33,7 +33,7 @@ public class AdminController {
     public String adminAllUsers(@AuthenticationPrincipal User user, Model model, Principal principal ) {
        model.addAttribute("admin", userService.allUsers());
         model.addAttribute("role", userService.allRoles());
-//        model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
+        model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
         model.addAttribute("user", user);
         return "admin";
     }
@@ -62,14 +62,19 @@ public class AdminController {
 
     @GetMapping("edit/{id}")
     public String getUserById(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("edit", userService.getUserById(id));
+        User user = userService.getUserById(id);
+        model.addAttribute("user", user);
         model.addAttribute("role", userService.allRoles());
+
+//        model.addAttribute("edit", userService.getUserById(id));
+
         return "edit";
     }
 
     @PostMapping("edit/{id}")
-    public String editUser(@ModelAttribute("edit") User user,
+    public String editUser(@ModelAttribute("user") User user,
                            @RequestParam(value = "roleSet") String[] role) {
+
         user.setRoles(getAddRole(role));
         userService.addUser(user);
         return "redirect:/admin";

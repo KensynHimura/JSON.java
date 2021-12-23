@@ -129,7 +129,7 @@
 
 <!--                                                     кнопка Edit-->
                                                     <td>
-                                                        <button class="btn btn-primary " data-bs-toggle="modal"  data-bs-target="${'#editStatic' + id} " >Edit</button>
+                                                        <button class="btn btn-primary " data-bs-toggle="modal"  data-bs-target="'#editStatic' + ${user.id}" >Edit</button>
                                                     </td>
 
 <!--                                                    <td><a class="btn btn-primary " data-bs-toggle="modal" data-bs-target="${'#staticEdit' + user.id} "  role="button">Edit</a>-->
@@ -137,7 +137,7 @@
 
 
                                                     <!-- Modal -->
-                                                    <div class="modal fade"  th:id="${'editStatic' + id}"  data-bs-backdrop="static"
+                                                    <div class="modal fade"  th:id="'editStatic' + ${user.id}"  data-bs-backdrop="static"
                                                          data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel" aria-hidden="true" role="dialog">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
@@ -150,7 +150,7 @@
 <!--                                                                кнопки в модал окне-->
                                                                 <div class="modal-body">
 
-                                                                    <form th:action="@{/edit/{id} (id=${user.getId})}" th:object="${edit}" method="post" th:id="${'editForm+user.getId'}">
+                                                                    <form th:action="@{/edit/{id} (id=${user.getId()})}" th:object="${edit}" method="post" th:id="${'editStaticForm + user.id'}">
 
                                                                         <div class=" form-group mt-3 fw-bold col-6 text-center offset-md-3">
                                                                             <label class="font-weight-bold"
@@ -201,6 +201,7 @@
                                                         </div>
 
 
+                                                    
                                                         <!-- кнопка Delete-->
                                                     <td><a class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#staticDelete" href="/delete/{id}"
                                                            role="button">Delete</a>
