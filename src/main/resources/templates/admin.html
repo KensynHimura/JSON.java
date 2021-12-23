@@ -12,14 +12,15 @@
 
 <body>
 <!--верхняя панель-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <!--        <tr th:each="user: ${user}">-->
-        <!--            <td th:text="${user.getEmail()}"></td>-->
-        <!--        <strong th:utext="${currentUser.login}"></strong>-->
-        <a class="navbar-brand"> with roles:</a>
-        <!--        <span th:utext="${currentUser.roleSet}"></span>-->
+<nav class="navbar navbar-lg navbar-dark bg-dark">
+    <div class="navbar-brand p-1 ">
+        <b th:text="${user.email}">email</b>
+        <h7> with roles:</h7>
+        <b th:text="${user.roles}"></b>
+    </div>
+<div>
         <a class="btn btn-dark text-secondary bg-dark" href="/login">Logout</a>
+                </tr>
     </div>
 </nav>
 
@@ -117,18 +118,31 @@
                                                     <td th:text="${user.getEmail()}">Email</td>
                                                     <td th:text="${user.getRoles()}">Role</td>
 
-                                                    <!-- кнопка Edit-->
-                                                    <td><button class="btn btn-primary " data-bs-toggle="modal" data-bs-target="{'#staticEdit' + user.id}">Edit</button>
-<!--                                                                href="/edit/{id} (id=${user.id})"-->
+
+<!--                                                    <td><a class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#staticDelete" href="/delete/{id}"-->
+<!--                                                           role="button">Edit</a>-->
+
+<!--                                                    <button class="btn btn-info edit-btn"-->
+<!--                                                            data-toggle="modal"-->
+<!--                                                            th:data-target="${'#edit'+ user.id}">Edit-->
+<!--                                                    </button>-->
+
+<!--                                                     кнопка Edit-->
+                                                    <td>
+                                                        <button class="btn btn-primary " data-bs-toggle="modal"  data-bs-target="${'#editStatic' + id} " >Edit</button>
                                                     </td>
 
+<!--                                                    <td><a class="btn btn-primary " data-bs-toggle="modal" data-bs-target="${'#staticEdit' + user.id} "  role="button">Edit</a>-->
+<!--                                                    </td>-->
+
+
                                                     <!-- Modal -->
-                                                    <div class="modal fade"  th:id="${'staticEdit' + user.id}"  data-bs-backdrop="static"
-                                                         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticEditLabel" aria-hidden="true" role="dialog">
+                                                    <div class="modal fade"  th:id="${'editStatic' + id}"  data-bs-backdrop="static"
+                                                         data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel" aria-hidden="true" role="dialog">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="staticEditLabel">Edit user</h5>
+                                                                    <h5 class="modal-title" id="editLabel">Edit user</h5>
                                                                 </div>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
@@ -136,13 +150,13 @@
 <!--                                                                кнопки в модал окне-->
                                                                 <div class="modal-body">
 
-                                                                    <form th:action="@{/edit/{id} (id=${user.getId})}" th:object="${edit}" method="post" th:id="${'editForm+user.id'}">
+                                                                    <form th:action="@{/edit/{id} (id=${user.getId})}" th:object="${edit}" method="post" th:id="${'editForm+user.getId'}">
 
                                                                         <div class=" form-group mt-3 fw-bold col-6 text-center offset-md-3">
                                                                             <label class="font-weight-bold"
                                                                                    for="id">ID
                                                                             </label>
-                                                                            <input type="text" name="id" th:value="${user.id}"  id="id"  readonly
+                                                                            <input type="text" name="id" th:value="${user.getId}"  id="id"  readonly
                                                                                    class="form-control">
                                                                         </div>
                                                                                                                                                                                                                         end ID

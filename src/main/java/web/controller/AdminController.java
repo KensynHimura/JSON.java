@@ -1,5 +1,6 @@
 package web.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,11 +30,11 @@ public class AdminController {
 
 
     @GetMapping(value = "admin")
-    public String adminAllUsers(Model model, Principal principal ) {
+    public String adminAllUsers(@AuthenticationPrincipal User user, Model model, Principal principal ) {
        model.addAttribute("admin", userService.allUsers());
         model.addAttribute("role", userService.allRoles());
-        model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
-
+//        model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
+        model.addAttribute("user", user);
         return "admin";
     }
 
