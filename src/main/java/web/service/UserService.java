@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -60,16 +60,6 @@ public class UserService implements UserDetailsService {
     public Role findByRoleName(String role) {
         return roleRepository.findByRole(role);
     }
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = findByUserFirstName(email);
-        if (user == null) {
-            throw new UsernameNotFoundException(email + "is not in the database");
-        }
-        return user;
-    }
-
 
 
 }

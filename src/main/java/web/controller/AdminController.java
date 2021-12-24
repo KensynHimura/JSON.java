@@ -1,6 +1,7 @@
 package web.controller;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +19,11 @@ import java.util.Set;
 public class AdminController {
 
     private final UserService userService;
+    private final UserDetailsService userDetailsService;
 
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, UserDetailsService userDetailsService) {
         this.userService = userService;
+        this.userDetailsService = userDetailsService;
     }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
@@ -33,14 +36,14 @@ public class AdminController {
     public String adminAllUsers(@AuthenticationPrincipal User user, Model model, Principal principal ) {
        model.addAttribute("admin", userService.allUsers());
         model.addAttribute("role", userService.allRoles());
-        model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
+        model.addAttribute("user", userDetailsService.loadUserByUsername(principal.getName()));
         model.addAttribute("user", user);
         return "admin";
     }
 
     @GetMapping(value = "user")
     public String userAllUsers(Model model, Principal principal) {
-      model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
+      model.addAttribute("user", userDetailsService.loadUserByUsername(principal.getName()));
         return "user";
     }
 
