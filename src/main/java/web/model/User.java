@@ -36,9 +36,7 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public Long getId() {
-        return id;
-    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
@@ -51,7 +49,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return firstName;
+        return email;
     }
 
     @Override

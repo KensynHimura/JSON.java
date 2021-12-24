@@ -9,6 +9,7 @@ import web.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findByFirstName(String userFirstName); // получение юзера по имени пользователя
-    
+//    User findByFirstName(String userFirstName); // получение юзера по имени пользователя
+
+    User findByEmail (String email);
 }
