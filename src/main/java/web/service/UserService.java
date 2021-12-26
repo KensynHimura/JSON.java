@@ -14,6 +14,7 @@ import java.util.List;
 
 
 @Service
+@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
@@ -25,28 +26,28 @@ public class UserService {
         this.roleRepository = roleRepository;
     }
 
-    @Transactional
+
     public void addUser(User user) {
         userRepository.save(user);
     }
 
-    @Transactional
+
     public List<User> allUsers() {
         return userRepository.findAll();
     }
 
-    @Transactional
+
     public List<Role> allRoles() {
         return roleRepository.findAll();
     }
 
-    @Transactional
+
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
 
 
-    @Transactional
+
     public User getUserById(Long id) {
         return userRepository.findById(id).get();
     }

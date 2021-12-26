@@ -1,21 +1,16 @@
 package web.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.servlet.ModelAndView;
 import web.exception.NoSuchUserException;
 import web.model.User;
 import web.service.UserService;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
-
 
 @RestController
 @RequestMapping("/api")
@@ -30,43 +25,50 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    public List<User> adminAllUsers() {
+    public List<User> adminAllUsers() {                     // выводит всех User's
         List<User> allUsers = userService.allUsers();
         return allUsers;
     }
 
     @GetMapping("/admin/{id}")
-    public User getUserById(@PathVariable("id") Long id) {
-        User user = userService.getUserById(id);
-        if (user == null) {
-            throw new NoSuchUserException("There is no User" + id + " in Database");
+    public User getUserById(@PathVariable("id") Long id) {         //находит по id
+        User user;
+        try {
+            user = userService.getUserById(id);
+        } catch (NoSuchElementException e) {
+           throw new  NoSuchUserException("There is no User ID = " + id + " in Database");
         }
         return user;
     }
 
     @PostMapping("/admin")
-    public User addUser(@RequestBody User user) {
+    public User addUser(@RequestBody User user) {          // добавляет
         userService.addUser(user);
         return user;
     }
 
     @PutMapping ("/admin")
-    public User editUser(@RequestBody User user) {
+    public User editUser(@RequestBody User user) {               // изменяет
         userService.addUser(user);
         return user;
     }
 
     @DeleteMapping("/admin/{id}")
-    public String deleteUser(@PathVariable("id") Long id) {
+    public String deleteUser(@PathVariable("id") Long id) {           // удаляет по  id
         User user = userService.getUserById(id);
         if (user == null) {
-            throw new NoSuchUserException("There is no User" + id + " in Database");
+            throw new NoSuchUserException("There is no User ID = " + id + " in Database");
         }
         userService.deleteUser(id);
         return "User with ID = " + id + " was delete";
     }
 
-
+    @GetMapping(value = "/login")
+    public ModelAndView loginPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("index");
+        return modelAndView;
+    }
 
 //    @PostMapping("/admin")
 //    public User addUser(@RequestBody User user) {
