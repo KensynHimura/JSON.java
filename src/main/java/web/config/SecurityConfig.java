@@ -21,7 +21,6 @@ import web.service.UserService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     private UserDetailsService userDetailsService;
 
     @Autowired
@@ -30,10 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-//          auth.inMemoryAuthentication().withUser("ADMIN").password("ADMIN").roles("ADMIN");
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
@@ -41,14 +38,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
                 // указываем страницу с формой логина
-                .loginPage("/api/login")
+//                .loginPage("/api/login")
                 //указываем логику обработки при логине
                 .successHandler(new LoginSuccessHandler())
 //                // указываем action с формы логина
-                .loginProcessingUrl("/login")
-//                // Указываем параметры логина и пароля с формы логина
-                .usernameParameter("j_email")
-                .passwordParameter("j_password")
+//                .loginProcessingUrl("/login")
+////                // Указываем параметры логина и пароля с формы логина
+//                .usernameParameter("j_email")
+//                .passwordParameter("j_password")
                 // даем доступ к форме логина всем
                 .permitAll();
 
@@ -58,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // указываем URL логаута
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 // указываем URL при удачном логауте
-                .logoutSuccessUrl("/login?logout")
+                .logoutSuccessUrl("/login")
                 //выклчаем кроссдоменную секьюрность (на этапе обучения неважна)
                 .and().csrf().disable();
 
@@ -68,9 +65,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //страницы аутентификаци доступна всем
                 .antMatchers("/api/**").anonymous()
                 // доступ только пользователю с ролью admin
-                .antMatchers("/api/admin/**").access("hasAnyRole('ROLE_ADMIN')")
+//                .antMatchers("/api/login/**").access("hasAnyRole('ROLE_ADMIN')")
                 // доступ только пользователю с ролью user и admin
-                .antMatchers("/api/user/**").access("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+                .antMatchers("/login/**").access("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
                 // защищенные URL
                 .antMatchers("/api/**").access("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')").anyRequest().authenticated();
 

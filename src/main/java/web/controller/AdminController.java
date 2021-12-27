@@ -24,13 +24,21 @@ public class AdminController {
         this.userDetailsService = userDetailsService;
     }
 
-    @GetMapping("/admin")
+    @GetMapping(value = "/login")          //авторизация
+    public ModelAndView loginPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login");
+        return modelAndView;
+    }
+
+
+    @GetMapping("/users")
     public List<User> adminAllUsers() {                     // выводит всех User's
         List<User> allUsers = userService.allUsers();
         return allUsers;
     }
 
-    @GetMapping("/admin/{id}")
+    @GetMapping("/users/{id}")
     public User getUserById(@PathVariable("id") Long id) {         //находит по id
         User user;
         try {
@@ -41,19 +49,19 @@ public class AdminController {
         return user;
     }
 
-    @PostMapping("/admin")
+    @PostMapping("/users")
     public User addUser(@RequestBody User user) {          // добавляет
         userService.addUser(user);
         return user;
     }
 
-    @PutMapping ("/admin")
+    @PutMapping ("/users")
     public User editUser(@RequestBody User user) {               // изменяет
         userService.addUser(user);
         return user;
     }
 
-    @DeleteMapping("/admin/{id}")
+    @DeleteMapping("/users/{id}")
     public String deleteUser(@PathVariable("id") Long id) {           // удаляет по  id
         User user = userService.getUserById(id);
         if (user == null) {
@@ -63,12 +71,7 @@ public class AdminController {
         return "User with ID = " + id + " was delete";
     }
 
-    @GetMapping(value = "/login")
-    public ModelAndView loginPage() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("index");
-        return modelAndView;
-    }
+
 
 //    @PostMapping("/admin")
 //    public User addUser(@RequestBody User user) {
