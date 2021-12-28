@@ -11,7 +11,7 @@
                     temp += '<td>' + u.email + '</td>'
                     temp += '<td>' + u.roles.map(r => r.role) + '</td>'
                     temp += '<td>' + '<button data-bs-toggle="modal" class="btn-info btn btn-primary"' +
-                        'data-bs-target="#editStatic" data-user-id =' + u.id +'>Edit</button>' + '</td>'
+                        'data-bs-target="#editStatic" user-id ='+ u.id +'>Edit</button>' + '</td>'
                     temp += '<td>' + '<button data-bs-toggle="modal" class="btn-info btn btn-primary"' +
                         'data-bs-target="#deleteStatic" data-user-id =' + u.id +'>Delete</button>' + '</td>'
                 })
@@ -22,11 +22,11 @@
 
 
 
-    var myModal = document.getElementById('editStatic')
-    var myInput = document.getElementById('user-id')
+    let myModal = document.getElementById('editStatic')
+    let myInput = document.getElementById( 'user-id')
     myModal.addEventListener('shown.bs.modal', e => {
         console.log()
-        let userId = myInput.focus()
+        let userId = e.focus(myInput)
         fetch('http://localhost:8080/api/users/' + userId).then(res => {
             res.json().then(userData => {
                 console.log(userData)
