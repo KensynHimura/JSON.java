@@ -13,7 +13,6 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import web.config.handler.LoginSuccessHandler;
-import web.service.UserService;
 
 
 @Configuration
@@ -38,14 +37,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
                 // указываем страницу с формой логина
-//                .loginPage("/api/login")
+                .loginPage("/login")
                 //указываем логику обработки при логине
                 .successHandler(new LoginSuccessHandler())
 //                // указываем action с формы логина
-//                .loginProcessingUrl("/login")
-////                // Указываем параметры логина и пароля с формы логина
-//                .usernameParameter("j_email")
-//                .passwordParameter("j_password")
+//                .loginProcessingUrl("login")
+//                // Указываем параметры логина и пароля с формы логина
+                .usernameParameter("j_email")
+                .passwordParameter("j_password")
                 // даем доступ к форме логина всем
                 .permitAll();
 
@@ -55,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // указываем URL логаута
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 // указываем URL при удачном логауте
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/login?logout")
                 //выклчаем кроссдоменную секьюрность (на этапе обучения неважна)
                 .and().csrf().disable();
 
@@ -63,13 +62,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // делаем страницу регистрации недоступной для авторизированных пользователей
                 .authorizeRequests()
                 //страницы аутентификаци доступна всем
-                .antMatchers("/api/**").anonymous()
+//                .antMatchers("/api/**").anonymous()
                 // доступ только пользователю с ролью admin
-//                .antMatchers("/api/login/**").access("hasAnyRole('ROLE_ADMIN')")
+                .antMatchers("/admin/**").access("hasAnyRole('ROLE_ADMIN')")
                 // доступ только пользователю с ролью user и admin
-                .antMatchers("/login/**").access("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+                .antMatchers("/user/**").access("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
                 // защищенные URL
-                .antMatchers("/api/**").access("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')").anyRequest().authenticated();
+                .antMatchers("/login").access("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')").anyRequest().authenticated();
 
     }
 

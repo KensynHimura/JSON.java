@@ -1,66 +1,21 @@
 package web.service;
 
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import web.repository.RoleRepository;
-import web.repository.UserRepository;
 import web.model.Role;
 import web.model.User;
 
 import java.util.List;
 
+public interface UserService {
 
-@Service
-@Transactional
-public class UserService {
+    public void addUser(User user);
 
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
+    public List<User> allUsers();
 
+    public List<Role> allRoles();
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-    }
+    public void deleteUser(Long id) ;
 
+    public User getUserById(Long id) ;
 
-    public void addUser(User user) {
-        userRepository.save(user);
-    }
-
-
-    public List<User> allUsers() {
-        return userRepository.findAll();
-    }
-
-
-    public List<Role> allRoles() {
-        return roleRepository.findAll();
-    }
-
-
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
-    }
-
-
-
-    public User getUserById(Long id) {
-        return userRepository.findById(id).get();
-    }
-
-    public User findByUserFirstName(String email) {
-//        return userRepository.findByFirstName (userFirstName);
-        return userRepository.findByEmail(email);
-
-    }
-
-    public Role findByRoleName(String role) {
-        return roleRepository.findByRole(role);
-    }
-
-
+    public Role findByRoleName(String role);
 }
